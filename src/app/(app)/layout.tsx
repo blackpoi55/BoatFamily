@@ -1,21 +1,23 @@
-import { requireUser } from "@/lib/auth";
+import { requireUserWithUnread } from "@/lib/auth";
 import { AppHeader } from "@/components/app-header";
 import { BottomNav } from "@/components/bottom-nav";
 import { UserMenu } from "@/components/user-menu";
 import { NotificationsBell } from "@/components/notifications-bell";
 import { SideNav } from "@/components/side-nav";
-import { countUnreadNotifications } from "@/app/actions/notifications";
+import { PermissionPrompt } from "@/components/permission-prompt";
 
 export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await requireUser();
-  const unread = await countUnreadNotifications();
+  const user = await requireUserWithUnread();
+  const unread = user.unreadCount;
+  const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
 
   return (
     <div className="flex h-dvh">
+      <PermissionPrompt vapidPublicKey={vapidPublicKey} />
       <SideNav user={user} unreadCount={unread} />
       <div className="flex h-dvh min-w-0 flex-1 flex-col">
         <div className="lg:hidden">
