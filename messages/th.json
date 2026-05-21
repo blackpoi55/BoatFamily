@@ -1,0 +1,125 @@
+{
+  "app": {
+    "name": "ครอบครัว",
+    "tagline": "พื้นที่ของครอบครัวเรา"
+  },
+  "nav": {
+    "chat": "แชท",
+    "notes": "บันทึก",
+    "reminders": "ช่วยจำ",
+    "bills": "ค่าใช้จ่าย",
+    "calendar": "ปฏิทิน",
+    "shopping": "ซื้อของ",
+    "photos": "อัลบั้ม",
+    "directory": "สมาชิก",
+    "more": "เพิ่มเติม",
+    "notifications": "การแจ้งเตือน",
+    "profile": "โปรไฟล์",
+    "settings": "ตั้งค่า",
+    "admin": "ผู้ดูแล",
+    "logout": "ออกจากระบบ"
+  },
+  "common": {
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ",
+    "edit": "แก้ไข",
+    "create": "สร้าง",
+    "submit": "ส่ง",
+    "loading": "กำลังโหลด...",
+    "search": "ค้นหา",
+    "back": "กลับ",
+    "confirm": "ยืนยัน",
+    "yes": "ใช่",
+    "no": "ไม่",
+    "today": "วันนี้",
+    "yesterday": "เมื่อวาน",
+    "language": "ภาษา"
+  },
+  "auth": {
+    "login": "เข้าสู่ระบบ",
+    "signup": "สมัครสมาชิก",
+    "username": "Username",
+    "usernamePlaceholder": "เช่น mom_jane (a-z, 0-9, _)",
+    "password": "รหัสผ่าน",
+    "nickname": "ชื่อเล่น",
+    "nicknamePlaceholder": "เช่น แม่เจน, น้องโบ๊ท",
+    "noAccount": "ยังไม่มีบัญชี?",
+    "haveAccount": "มีบัญชีแล้ว?",
+    "pendingApproval": "บัญชีของคุณรอการอนุมัติจากผู้ดูแล",
+    "welcome": "ยินดีต้อนรับ"
+  },
+  "chat": {
+    "title": "แชทรวมครอบครัว",
+    "placeholder": "พิมพ์ข้อความ...",
+    "send": "ส่ง",
+    "reply": "ตอบกลับ",
+    "react": "รีแอค",
+    "noMessages": "ยังไม่มีข้อความ เริ่มคุยกันเลย!"
+  },
+  "notes": {
+    "title": "บันทึก",
+    "newNote": "บันทึกใหม่",
+    "private": "ส่วนตัว",
+    "shared": "รวม",
+    "tagged": "ที่เกี่ยวข้อง",
+    "noteTitle": "หัวข้อ",
+    "noteContent": "เนื้อหา",
+    "visibility": "การมองเห็น",
+    "tagPeople": "แท็กสมาชิก",
+    "comments": "ความคิดเห็น",
+    "addComment": "เพิ่มความคิดเห็น"
+  },
+  "reminders": {
+    "title": "บันทึกช่วยจำ",
+    "newReminder": "สร้างการแจ้งเตือน",
+    "frequency": "ความถี่",
+    "once": "ครั้งเดียว",
+    "daily": "ทุกวัน",
+    "weekly": "ทุกอาทิตย์",
+    "monthly": "ทุกเดือน",
+    "yearly": "ทุกปี",
+    "custom": "กำหนดเอง",
+    "dateTime": "วันและเวลา",
+    "recipients": "แจ้งเตือนถึง",
+    "enabled": "เปิดการแจ้งเตือน"
+  },
+  "bills": {
+    "title": "ค่าใช้จ่าย",
+    "newBill": "บิลใหม่",
+    "name": "ชื่อบิล",
+    "amount": "จำนวนเงิน",
+    "dueDate": "ครบกำหนด",
+    "frequency": "รายการ",
+    "participants": "ผู้ร่วมจ่าย",
+    "uploadSlip": "อัพสลิป",
+    "paid": "จ่ายแล้ว",
+    "pending": "รอจ่าย",
+    "overdue": "เลยกำหนด"
+  },
+  "calendar": {
+    "title": "ปฏิทินครอบครัว",
+    "newEvent": "เพิ่มกิจกรรม"
+  },
+  "shopping": {
+    "title": "รายการซื้อของ",
+    "addItem": "เพิ่มของ",
+    "itemName": "ชื่อของ",
+    "quantity": "จำนวน",
+    "completed": "ซื้อแล้ว"
+  },
+  "photos": {
+    "title": "อัลบั้มรูป",
+    "newAlbum": "อัลบั้มใหม่",
+    "upload": "อัพโหลด"
+  },
+  "directory": {
+    "title": "สมาชิกครอบครัว",
+    "emergency": "ข้อมูลฉุกเฉิน",
+    "phone": "เบอร์โทร",
+    "birthDate": "วันเกิด",
+    "bloodType": "กรุ๊ปเลือด",
+    "allergies": "ภูมิแพ้",
+    "emergencyContact": "ติดต่อฉุกเฉิน"
+  }
+}

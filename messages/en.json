@@ -1,0 +1,125 @@
+{
+  "app": {
+    "name": "Family",
+    "tagline": "Our family space"
+  },
+  "nav": {
+    "chat": "Chat",
+    "notes": "Notes",
+    "reminders": "Reminders",
+    "bills": "Bills",
+    "calendar": "Calendar",
+    "shopping": "Shopping",
+    "photos": "Photos",
+    "directory": "Members",
+    "more": "More",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "settings": "Settings",
+    "admin": "Admin",
+    "logout": "Sign out"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "search": "Search",
+    "back": "Back",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "language": "Language"
+  },
+  "auth": {
+    "login": "Sign in",
+    "signup": "Sign up",
+    "username": "Username",
+    "usernamePlaceholder": "e.g. mom_jane (a-z, 0-9, _)",
+    "password": "Password",
+    "nickname": "Display name",
+    "nicknamePlaceholder": "e.g. Mom, Dad, Boat",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "pendingApproval": "Your account is awaiting admin approval",
+    "welcome": "Welcome"
+  },
+  "chat": {
+    "title": "Family chat",
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "reply": "Reply",
+    "react": "React",
+    "noMessages": "No messages yet — start the conversation!"
+  },
+  "notes": {
+    "title": "Notes",
+    "newNote": "New note",
+    "private": "Private",
+    "shared": "Shared",
+    "tagged": "Tagged",
+    "noteTitle": "Title",
+    "noteContent": "Content",
+    "visibility": "Visibility",
+    "tagPeople": "Tag members",
+    "comments": "Comments",
+    "addComment": "Add a comment"
+  },
+  "reminders": {
+    "title": "Reminders",
+    "newReminder": "New reminder",
+    "frequency": "Frequency",
+    "once": "Once",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "custom": "Custom",
+    "dateTime": "Date & time",
+    "recipients": "Notify",
+    "enabled": "Enabled"
+  },
+  "bills": {
+    "title": "Bills",
+    "newBill": "New bill",
+    "name": "Bill name",
+    "amount": "Amount",
+    "dueDate": "Due date",
+    "frequency": "Frequency",
+    "participants": "Participants",
+    "uploadSlip": "Upload slip",
+    "paid": "Paid",
+    "pending": "Pending",
+    "overdue": "Overdue"
+  },
+  "calendar": {
+    "title": "Family calendar",
+    "newEvent": "Add event"
+  },
+  "shopping": {
+    "title": "Shopping list",
+    "addItem": "Add item",
+    "itemName": "Item name",
+    "quantity": "Quantity",
+    "completed": "Completed"
+  },
+  "photos": {
+    "title": "Photo albums",
+    "newAlbum": "New album",
+    "upload": "Upload"
+  },
+  "directory": {
+    "title": "Family members",
+    "emergency": "Emergency info",
+    "phone": "Phone",
+    "birthDate": "Birthday",
+    "bloodType": "Blood type",
+    "allergies": "Allergies",
+    "emergencyContact": "Emergency contact"
+  }
+}

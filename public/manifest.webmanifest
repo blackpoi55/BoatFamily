@@ -1,0 +1,26 @@
+{
+  "name": "ครอบครัว · Family",
+  "short_name": "ครอบครัว",
+  "description": "พื้นที่ของครอบครัวเรา — แชท บันทึก แจ้งเตือน ค่าใช้จ่าย",
+  "start_url": "/chat",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0ea5e9",
+  "theme_color": "#0ea5e9",
+  "lang": "th",
+  "categories": ["lifestyle", "social", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "แชท", "url": "/chat", "icons": [{ "src": "/icons/icon.svg", "sizes": "any" }] },
+    { "name": "บันทึก", "url": "/notes", "icons": [{ "src": "/icons/icon.svg", "sizes": "any" }] },
+    { "name": "แจ้งเตือน", "url": "/reminders", "icons": [{ "src": "/icons/icon.svg", "sizes": "any" }] }
+  ]
+}

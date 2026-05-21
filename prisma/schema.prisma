@@ -1,0 +1,372 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum NoteVisibility {
+  PRIVATE
+  SHARED
+  TAGGED
+}
+
+enum ReminderFrequency {
+  ONCE
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  CUSTOM
+}
+
+enum BillFrequency {
+  ONCE
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum BillStatus {
+  PENDING
+  PARTIAL
+  PAID
+  OVERDUE
+}
+
+model User {
+  id           String     @id @default(uuid()) @db.Uuid
+  username     String     @unique
+  email        String     @unique
+  name         String
+  avatarUrl    String?
+  role         UserRole   @default(MEMBER)
+  status       UserStatus @default(PENDING)
+  phoneNumber  String?
+  birthDate    DateTime?  @db.Date
+  bloodType    String?
+  allergies    String?
+  emergencyContact String?
+  locale       String     @default("th")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  approvedAt   DateTime?
+  approvedById String?    @db.Uuid
+
+  messages             Message[]
+  messageReactions     MessageReaction[]
+  notesAuthored        Note[]              @relation("NoteAuthor")
+  noteTags             NoteTag[]
+  noteComments         NoteComment[]
+  remindersCreated     Reminder[]          @relation("ReminderCreator")
+  reminderRecipients   ReminderRecipient[]
+  billsCreated         Bill[]              @relation("BillCreator")
+  billParticipants     BillParticipant[]
+  paymentSlips         PaymentSlip[]
+  pushSubscriptions    PushSubscription[]
+  calendarEvents       CalendarEvent[]     @relation("EventCreator")
+  eventParticipants    EventParticipant[]
+  shoppingItems        ShoppingItem[]      @relation("ShoppingItemCreator")
+  shoppingChecks       ShoppingItem[]      @relation("ShoppingItemChecker")
+  photosUploaded       Photo[]
+  albums               PhotoAlbum[]
+  notifications        Notification[]
+
+  @@index([status])
+  @@map("users")
+}
+
+model Message {
+  id          String   @id @default(uuid()) @db.Uuid
+  senderId    String   @db.Uuid
+  sender      User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content     String
+  attachments String[] @default([])
+  replyToId   String?  @db.Uuid
+  replyTo     Message? @relation("MessageReply", fields: [replyToId], references: [id])
+  replies     Message[] @relation("MessageReply")
+  editedAt    DateTime?
+  deletedAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  reactions MessageReaction[]
+
+  @@index([createdAt])
+  @@map("messages")
+}
+
+model MessageReaction {
+  id        String   @id @default(uuid()) @db.Uuid
+  messageId String   @db.Uuid
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  emoji     String
+  createdAt DateTime @default(now())
+
+  @@unique([messageId, userId, emoji])
+  @@map("message_reactions")
+}
+
+model Note {
+  id          String         @id @default(uuid()) @db.Uuid
+  authorId    String         @db.Uuid
+  author      User           @relation("NoteAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  title       String
+  content     String
+  attachments String[]       @default([])
+  visibility  NoteVisibility @default(PRIVATE)
+  color       String?
+  pinned      Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  tags     NoteTag[]
+  comments NoteComment[]
+
+  @@index([authorId])
+  @@index([visibility])
+  @@map("notes")
+}
+
+model NoteTag {
+  noteId String @db.Uuid
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([noteId, userId])
+  @@map("note_tags")
+}
+
+model NoteComment {
+  id          String   @id @default(uuid()) @db.Uuid
+  noteId      String   @db.Uuid
+  note        Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  authorId    String   @db.Uuid
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content     String
+  attachments String[] @default([])
+  createdAt   DateTime @default(now())
+
+  @@index([noteId])
+  @@map("note_comments")
+}
+
+model Reminder {
+  id           String            @id @default(uuid()) @db.Uuid
+  creatorId    String            @db.Uuid
+  creator      User              @relation("ReminderCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  title        String
+  description  String?
+  frequency    ReminderFrequency @default(ONCE)
+  startAt      DateTime
+  endAt        DateTime?
+  cronExpr     String?
+  timezone     String            @default("Asia/Bangkok")
+  nextFireAt   DateTime?
+  lastFiredAt  DateTime?
+  enabled      Boolean           @default(true)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  recipients ReminderRecipient[]
+
+  @@index([nextFireAt, enabled])
+  @@map("reminders")
+}
+
+model ReminderRecipient {
+  reminderId String   @db.Uuid
+  reminder   Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  userId     String   @db.Uuid
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([reminderId, userId])
+  @@map("reminder_recipients")
+}
+
+model Bill {
+  id           String        @id @default(uuid()) @db.Uuid
+  creatorId    String        @db.Uuid
+  creator      User          @relation("BillCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  amount       Decimal       @db.Decimal(12, 2)
+  currency     String        @default("THB")
+  frequency    BillFrequency @default(MONTHLY)
+  dueDate      DateTime
+  nextDueDate  DateTime?
+  status       BillStatus    @default(PENDING)
+  notifyDaysBefore Int        @default(3)
+  iconKey      String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  participants BillParticipant[]
+  slips        PaymentSlip[]
+
+  @@index([dueDate, status])
+  @@map("bills")
+}
+
+model BillParticipant {
+  billId    String   @db.Uuid
+  bill      Bill     @relation(fields: [billId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shareAmount Decimal? @db.Decimal(12, 2)
+  paid      Boolean  @default(false)
+  paidAt    DateTime?
+
+  @@id([billId, userId])
+  @@map("bill_participants")
+}
+
+model PaymentSlip {
+  id        String   @id @default(uuid()) @db.Uuid
+  billId    String   @db.Uuid
+  bill      Bill     @relation(fields: [billId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  amount    Decimal? @db.Decimal(12, 2)
+  paidAt    DateTime @default(now())
+  note      String?
+  createdAt DateTime @default(now())
+
+  @@index([billId])
+  @@map("payment_slips")
+}
+
+model PushSubscription {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("push_subscriptions")
+}
+
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  url       String?
+  category  String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model CalendarEvent {
+  id          String   @id @default(uuid()) @db.Uuid
+  creatorId   String   @db.Uuid
+  creator     User     @relation("EventCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  startAt     DateTime
+  endAt       DateTime?
+  allDay      Boolean  @default(false)
+  location    String?
+  color       String?
+  recurring   Boolean  @default(false)
+  recurringRule String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  participants EventParticipant[]
+
+  @@index([startAt])
+  @@map("calendar_events")
+}
+
+model EventParticipant {
+  eventId String        @db.Uuid
+  event   CalendarEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId  String        @db.Uuid
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rsvp    String?
+
+  @@id([eventId, userId])
+  @@map("event_participants")
+}
+
+model ShoppingItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  createdById String   @db.Uuid
+  createdBy   User     @relation("ShoppingItemCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  name        String
+  quantity    String?
+  category    String?
+  note        String?
+  checked     Boolean  @default(false)
+  checkedById String?  @db.Uuid
+  checkedBy   User?    @relation("ShoppingItemChecker", fields: [checkedById], references: [id])
+  checkedAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([checked])
+  @@map("shopping_items")
+}
+
+model PhotoAlbum {
+  id          String   @id @default(uuid()) @db.Uuid
+  creatorId   String   @db.Uuid
+  creator     User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  coverUrl    String?
+  eventDate   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  photos Photo[]
+
+  @@map("photo_albums")
+}
+
+model Photo {
+  id         String     @id @default(uuid()) @db.Uuid
+  albumId    String     @db.Uuid
+  album      PhotoAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  uploaderId String     @db.Uuid
+  uploader   User       @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+  url        String
+  thumbUrl   String?
+  caption    String?
+  width      Int?
+  height     Int?
+  takenAt    DateTime?
+  createdAt  DateTime   @default(now())
+
+  @@index([albumId])
+  @@map("photos")
+}
