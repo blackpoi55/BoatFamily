@@ -50,7 +50,7 @@ export async function deleteUser(userId: string) {
   revalidatePath("/admin");
   return { ok: true };
 }
-
+ 
 export async function toggleAdmin(userId: string) {
   await requireAdmin();
   const parsed = userIdSchema.safeParse(userId);
