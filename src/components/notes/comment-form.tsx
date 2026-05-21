@@ -6,6 +6,7 @@ import { Send, ImagePlus, Loader2 } from "lucide-react";
 import { addComment } from "@/app/actions/notes";
 import { AttachmentPreview } from "@/components/shared/attachment-preview";
 import { useImageAttachments } from "@/lib/use-image-attachments";
+import { IMAGE_ACCEPT } from "@/lib/utils";
 
 export function CommentForm({ noteId }: { noteId: string }) {
   const textRef = useRef<HTMLTextAreaElement>(null);
@@ -47,7 +48,7 @@ export function CommentForm({ noteId }: { noteId: string }) {
       <input
         ref={attach.inputRef}
         type="file"
-        accept="image/*"
+        accept={IMAGE_ACCEPT}
         multiple
         hidden
         onChange={attach.onFileInputChange}

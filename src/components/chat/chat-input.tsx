@@ -7,7 +7,7 @@ import { Send, X, ImagePlus, Loader2 } from "lucide-react";
 import { sendMessage, type ChatMessage } from "@/app/actions/chat";
 import { AttachmentPreview } from "@/components/shared/attachment-preview";
 import { useImageAttachments } from "@/lib/use-image-attachments";
-import { cn } from "@/lib/utils";
+import { cn, IMAGE_ACCEPT } from "@/lib/utils";
 
 type Props = {
   replyTo: ChatMessage | null;
@@ -101,7 +101,7 @@ export function ChatInput({ replyTo, onClearReply }: Props) {
         <input
           ref={attach.inputRef}
           type="file"
-          accept="image/*"
+          accept={IMAGE_ACCEPT}
           multiple
           hidden
           onChange={attach.onFileInputChange}

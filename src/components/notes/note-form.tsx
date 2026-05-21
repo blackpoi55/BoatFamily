@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AttachmentPreview } from "@/components/shared/attachment-preview";
 import { useImageAttachments } from "@/lib/use-image-attachments";
-import { cn, getInitials } from "@/lib/utils";
+import { cn, getInitials, IMAGE_ACCEPT } from "@/lib/utils";
 
 type FamilyMember = {
   id: string;
@@ -150,7 +150,7 @@ export function NoteForm({ members, note }: Props) {
         <input
           ref={attach.inputRef}
           type="file"
-          accept="image/*"
+          accept={IMAGE_ACCEPT}
           multiple
           hidden
           onChange={attach.onFileInputChange}

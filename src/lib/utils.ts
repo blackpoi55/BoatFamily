@@ -23,3 +23,9 @@ export function getInitials(name: string) {
     .slice(0, 2)
     .toUpperCase();
 }
+
+// Use explicit MIME types instead of "image/*" so Android Chrome opens the
+// standard file chooser (camera + local Files + Drive) rather than the
+// system Photo Picker that only surfaces Google Photos.
+export const IMAGE_ACCEPT =
+  "image/jpeg,image/jpg,image/png,image/webp,image/gif,image/heic,image/heif";

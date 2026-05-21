@@ -6,6 +6,7 @@ import { ImagePlus, Loader2, Upload, X } from "lucide-react";
 import { useImageAttachments } from "@/lib/use-image-attachments";
 import { AttachmentPreview } from "@/components/shared/attachment-preview";
 import { uploadPhotos } from "@/app/actions/photos";
+import { IMAGE_ACCEPT } from "@/lib/utils";
 
 export function PhotoUploader({ albumId }: { albumId: string }) {
   const attach = useImageAttachments({ max: 20 });
@@ -33,7 +34,7 @@ export function PhotoUploader({ albumId }: { albumId: string }) {
       <input
         ref={attach.inputRef}
         type="file"
-        accept="image/*"
+        accept={IMAGE_ACCEPT}
         multiple
         hidden
         onChange={attach.onFileInputChange}

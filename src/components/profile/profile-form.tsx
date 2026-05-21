@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ThaiDatePicker } from "@/components/ui/thai-date-picker";
 import { updateProfile, updateAvatar } from "@/app/actions/profile";
 import { compressImage } from "@/lib/compress-image";
-import { getInitials } from "@/lib/utils";
+import { getInitials, IMAGE_ACCEPT } from "@/lib/utils";
 
 type Props = {
   user: {
@@ -94,7 +94,7 @@ export function ProfileForm({ user }: Props) {
         <input
           ref={avatarInputRef}
           type="file"
-          accept="image/*"
+          accept={IMAGE_ACCEPT}
           hidden
           onChange={onAvatarChange}
         />

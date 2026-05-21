@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { ImagePlus, Upload, Loader2, X } from "lucide-react";
 import { compressImage } from "@/lib/compress-image";
 import { uploadSlip } from "@/app/actions/bills";
+import { IMAGE_ACCEPT } from "@/lib/utils";
 
 export function SlipUpload({ billId }: { billId: string }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -77,7 +78,7 @@ export function SlipUpload({ billId }: { billId: string }) {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept={IMAGE_ACCEPT}
         hidden
         onChange={onFileChange}
       />
